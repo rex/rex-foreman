@@ -1,0 +1,35 @@
+{
+  "name": "rex-foreman",
+  "version": "0.0.1",
+  "description": "A fully-node port of the wonderful Foreman gem to consolidate all your console windows into one well-formatted window.",
+  "main": "rex-foreman.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rex/rex-foreman.git"
+  },
+  "bin" : {
+    "rex-foreman" : "./rex-foreman.js"
+  },
+  "keywords": [
+    "Foreman",
+    "console",
+    "multiple",
+    "windows",
+    "stdout",
+    "manage",
+    "SOA",
+    "rex"
+  ],
+  "author": "Pierce Moore <me@prex.io>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "a2e230d8e4bc67129abf706e43052abca485ec47",
+  "bugs": {
+    "url": "https://github.com/Rex/rex-foreman/issues"
+  },
+  "dependencies" : {
+    "optimist" : "*",
+    "supercli" : "*",
+    "underscore" : "*"
+  }
+}

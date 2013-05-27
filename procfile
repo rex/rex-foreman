@@ -1,0 +1,4 @@
+MongoDB : sudo mongod
+DataService : node ~/Zngine/zngine-ds/app.js
+Redis : redis-server
+Admin Templates : rex-template -i "~/Zngine/zngine-admin/public/js/templates/" -o "~/Zngine/zngine-admin/public/js/templates.js" -w 
