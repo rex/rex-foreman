@@ -1,3 +1,6 @@
+#
+# This HAS to become a JSON file, to support changing the current working directory. Which Node doesn't do well dynamically.
+#
 MongoDB : sudo mongod
 DataService : node ~/Zngine/zngine-ds/app.js
 Redis : redis-server

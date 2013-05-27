@@ -22,17 +22,21 @@ var getColor = function(title) {
   return allColors[color](title)
 }
 
+var killProcesses = function() {
+  _.each(procs, function(proc) {
+    proc.process.kill('SIGTERM')
+  })
+  process.exit(1)
+}
+
 var lines = procfile.split("\n")
 var procs = {}
 
 lines.forEach(function(line) {
-  scli("Parsing line: '" + line + "'")
   var tmp = line.split(":")
   if(tmp[1]) {
     var commandString =  tmp[1].replace(/\r/g,"").toString().trim().split(" ")
     var title = tmp[0].toString().trim()
-    scli("New Title: '" + title + "', Command String: ", commandString)
-
     procs[title] = {
       command : _.first(commandString),
       args : _.rest(commandString),
@@ -41,17 +45,17 @@ lines.forEach(function(line) {
   }
 })
 
-fs.writeFileSync('parsed.json', JSON.stringify(procs, null, 2))
-scli.success("Parsed config written!")
-
 _.each(procs, function(params, name) {
-  console.log( params.prefix + ": " + name, params.args )
-
-  /*
-  var process = cp.spawn(command.command, command.args)
+  var process = cp.spawn(params.command, params.args)
   process.stdout.on('data', function(data) {
-    
+    console.log(params.prefix + ": " + data)    
   })
-  */
+  process.stderr.on('data', function(data) {
+    console.log(params.prefix + " -- ERROR -- " + data)
+    killProcesses()
+  })
+  procs[name].pid = process.pid
+ // procs[name].process = process
 })
-scli("Available colors:", colorKeys)
+
+fs.writeFileSync('parsed.json', JSON.stringify(procs, null, 2))

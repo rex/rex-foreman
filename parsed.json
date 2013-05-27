@@ -4,19 +4,22 @@
     "args": [
       "mongod"
     ],
-    "prefix": "\u001b[1;33mMongoDB\u001b[0m"
+    "prefix": "\u001b[0;33mMongoDB\u001b[0m",
+    "pid": 7125
   },
   "DataService": {
     "command": "node",
     "args": [
       "~/Zngine/zngine-ds/app.js"
     ],
-    "prefix": "\u001b[1;35mDataService\u001b[0m"
+    "prefix": "\u001b[0;36mDataService\u001b[0m",
+    "pid": 7126
   },
   "Redis": {
     "command": "redis-server",
     "args": [],
-    "prefix": "\u001b[1;31mRedis\u001b[0m"
+    "prefix": "\u001b[1;31mRedis\u001b[0m",
+    "pid": 7128
   },
   "Admin Templates": {
     "command": "rex-template",
@@ -27,6 +30,7 @@
       "\"~/Zngine/zngine-admin/public/js/templates.js\"",
       "-w"
     ],
-    "prefix": "\u001b[1;31mAdmin Templates\u001b[0m"
+    "prefix": "\u001b[0;32mAdmin Templates\u001b[0m",
+    "pid": 7129
   }
 }
