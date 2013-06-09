@@ -4,33 +4,33 @@
     "args": [
       "mongod"
     ],
-    "prefix": "\u001b[0;33mMongoDB\u001b[0m",
-    "pid": 7125
-  },
-  "DataService": {
-    "command": "node",
-    "args": [
-      "~/Zngine/zngine-ds/app.js"
-    ],
-    "prefix": "\u001b[0;36mDataService\u001b[0m",
-    "pid": 7126
+    "dir": "/Users/pierce/GitHub/npm/rex-foreman",
+    "workers": 3
   },
   "Redis": {
     "command": "redis-server",
     "args": [],
-    "prefix": "\u001b[1;31mRedis\u001b[0m",
-    "pid": 7128
+    "dir": "/Users/pierce/GitHub/npm/rex-foreman",
+    "workers": 1
+  },
+  "DataService": {
+    "command": "node",
+    "args": [
+      "app.js"
+    ],
+    "dir": "/Users/pierce/GitHub/npm/rex-foreman/~/Zngine/zngine-ds",
+    "workers": 5
   },
   "Admin Templates": {
     "command": "rex-template",
     "args": [
       "-i",
-      "\"~/Zngine/zngine-admin/public/js/templates/\"",
+      "'./public/js/templates'",
       "-o",
-      "\"~/Zngine/zngine-admin/public/js/templates.js\"",
+      "'./public/js/templates.js'",
       "-w"
     ],
-    "prefix": "\u001b[0;32mAdmin Templates\u001b[0m",
-    "pid": 7129
+    "dir": "/Users/pierce/GitHub/npm/rex-foreman/~/Zngine/zngine-admin",
+    "workers": 1
   }
 }

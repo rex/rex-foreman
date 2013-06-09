@@ -1,0 +1,18 @@
+{
+  "MongoDB" : {
+    "cmd" : "sudo mongod",
+    "workers" : 3
+  },
+  "Redis" : {
+    "cmd" : "redis-server"
+  },
+  "DataService" : {
+    "dir" : "~/Zngine/zngine-ds/",
+    "cmd" : "node app.js",
+    "workers" : 5
+  },
+  "Admin Templates" : {
+    "dir" : "~/Zngine/zngine-admin/",
+    "cmd" : "rex-template -i './public/js/templates' -o './public/js/templates.js' -w"  
+  }
+}

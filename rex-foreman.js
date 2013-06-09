@@ -8,7 +8,8 @@ var scli = require('supercli')
   , path = require('path')
   , package = require('./package.json')
   , optimist = require('optimist')
-  , procfile = fs.readFileSync(path.resolve(__dirname, 'procfile'), 'utf-8')
+  , procfile = require('./procfile.json')
+  , procs = {}
   ;
 
 scli("Platform: ", os.platform() )
@@ -29,24 +30,28 @@ var killProcesses = function() {
   process.exit(1)
 }
 
-var lines = procfile.split("\n")
-var procs = {}
+_.each(procfile, function(params, name) {
+  
+  var command = _.first( params.cmd.split(" ") )
+  var args = _.rest( params.cmd.split(" ") )
 
-lines.forEach(function(line) {
-  var tmp = line.split(":")
-  if(tmp[1]) {
-    var commandString =  tmp[1].replace(/\r/g,"").toString().trim().split(" ")
-    var title = tmp[0].toString().trim()
-    procs[title] = {
-      command : _.first(commandString),
-      args : _.rest(commandString),
-      prefix : getColor(title)
-    }
+  procs[name] = {
+    command : command,
+    args : args
   }
-})
+  
+  // Make sure we set default values in case of empty properties
+  procs[name] = {
+    dir : path.resolve( params.dir || './' ),
+    workers : params.workers || 1,
+    prefix : getColor(name+' | ')
+  }
 
-_.each(procs, function(params, name) {
-  var process = cp.spawn(params.command, params.args)
+  scli( procs[name].prefix + "Process '"+name+"' created. \n\t" + scli.$.red(command) )
+  
+  var process = cp.spawn(command, args, {
+    cwd : procs[name].dir
+  })
   process.stdout.on('data', function(data) {
     console.log(params.prefix + ": " + data)    
   })
@@ -55,7 +60,8 @@ _.each(procs, function(params, name) {
     killProcesses()
   })
   procs[name].pid = process.pid
- // procs[name].process = process
+  procs[name].process = process
+
 })
 
-fs.writeFileSync('parsed.json', JSON.stringify(procs, null, 2))
+scli.success("All processes are now working!")
