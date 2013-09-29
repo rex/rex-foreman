@@ -1,0 +1,13 @@
+{
+  "name": "Zngine",
+  "version": "0.0.1",
+  "dependencies": {
+    "backbone": "latest",
+    "underscore": "latest",
+    "requirejs": "latest",
+    "jquery": "latest",
+    "handlebars": "latest",
+    "semantic": "latest",
+    "socket.io-client": "latest"
+  }
+}

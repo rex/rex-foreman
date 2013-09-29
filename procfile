@@ -1,0 +1,3 @@
+brew: brew server
+templates: rex-template -w
+redis: redis-server

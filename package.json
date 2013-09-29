@@ -29,7 +29,12 @@
   },
   "dependencies" : {
     "optimist" : "*",
-    "supercli" : "*",
-    "underscore" : "*"
+    "rex-shell" : ">=0.1.2",
+    "underscore" : "1.5.x",
+    "socket.io": "*",
+    "express": "*"
+  },
+  "config" : {
+    "port" : 3009
   }
 }
