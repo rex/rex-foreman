@@ -13,10 +13,6 @@
 		<script type="text/javascript" src="/assets/components/handlebars/handlebars.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript" src="/assets/rex-foreman.client.js"></script>
-
-		<script>
-			window.RexSocket.init( io )
-		</script>
 	</head>
 
 	<body>
@@ -38,70 +34,77 @@
 					</div>
 				</div>
 
+				<div id="process_item_target"></div>
+
 			</div>
 
 			<!-- <div class="ui two column relaxed grid"> -->
 
-				<div class="column" data-rex-column>
+			<div class="column" data-rex-column>
+				<div class="ui divided list" id="process_output_target"></div>					
+			</div>
 
-<p class="output">Killing any latent processes</p>
-<p class="output">Password:</p>
-<p class="output">No matching processes were found</p>
-<p class="output">No matching processes were found</p>
-<p class="output">No matching processes were found</p>
-<p class="output">No matching processes were found</p>
-<p class="output">Starting Zngine Application Now!</p>
-<p class="output">10:33:56 Redis.1         | started with pid 37758</p>
-<p class="output">10:33:56 PR_Handlebars.1 | started with pid 37759</p>
-<p class="output">10:33:56 PR_SASS.1       | started with pid 37760</p>
-<p class="output">10:33:56 DataService.1   | started with pid 37761</p>
-<p class="output">10:33:56 Redis.1         | [37758] 29 Sep 10:33:56.281 # Server started, Redis version 2.6.16</p>
-<p class="output">10:33:56 DataService.1   | 29 Sep 10:33:56 - [nodemon] v0.7.10</p>
-<p class="output">10:33:56 DataService.1   | 29 Sep 10:33:56 - [nodemon] to restart at any time, enter `rs`</p>
-<p class="output">10:33:56 DataService.1   | 29 Sep 10:33:56 - [nodemon] watching: /Users/pierce/Zngine/ds</p>
-<p class="output">10:33:56 DataService.1   | 29 Sep 10:33:56 - [nodemon] starting `node --debug app.js --development`</p>
-<p class="output">10:33:56 DataService.1   | debugger listening on port 5858</p>
-<p class="output">10:33:56 PR_SASS.1       | >>> Sass is watching for changes. Press Ctrl-C to stop.</p>
-<p class="output">10:33:56 DataService.1   | Configuring data service for local operation</p>
-<p class="output">10:33:56 PR_Handlebars.1 | [ Rex-Template: Success ] [#1, 10:33:56] Compiled 160 templates to ./public/js/templates.js in 0.338 seconds</p>
-<p class="output">10:33:56 DataService.1   | Connecting to mongo at mongodb://dev.zngine.com/zngine_dev</p>
-<p class="output">10:33:56 DataService.1   | [ Zngine DS: Log ] connecting to MongoDB...</p>
-<p class="output">10:33:57 DataService.1   | Express server listening on port 3000</p>
-<p class="output">10:33:57 DataService.1   | info: Redis is connected and caching stuff</p>
-<p class="output">10:33:57 DataService.1   | [ Zngine DS: Log ] MongoDB connected!</p>
-<p class="output">10:33:57 DataService.1   | [ Zngine DS: Log ] MongoDB connection opened!</p>
-<p class="output">^CSIGINT received</p>
-<p class="output">10:34:00 system          | sending SIGTERM to all processes</p>
-<p class="output">10:34:00 DataService.1   | 29 Sep 10:34:00 - [nodemon] exiting</p>
-<p class="output">10:34:00 PR_SASS.1       | SignalException: SIGTERM</p>
-<p class="output">10:34:00 PR_SASS.1       |   Use --trace for backtrace.</p>
-<p class="output">10:34:00 DataService.1   | exited with code 0</p>
-<p class="output">10:34:00 PR_SASS.1       | exited with code 0</p>
-<p class="output">10:34:00 PR_Handlebars.1 | exited with code 0</p>
-<p class="output">10:34:00 Redis.1         | terminated by SIGINT</p>
-
-				</div>
-
+			<div class="ui modal" id="server_down">
+			  <div class="header">
+			    Server Died!
+			  </div>
+			  <div class="content">
+			    <div class="right">
+			      It looks like the master process died. Restart it and get back to work!
+			    </div>
+			  </div>
+			  <div class="actions">
+			    <div class="positive ui button">OK</div>
+			  </div>
+			</div>
 
 		</div>
 
 <script type="text/javascript">
 $(function() {
+	console.log("Booting socket", window.RexSocket)
+	window.RexSocket.init( io )
+
 	$(".sidebar").sidebar('show')
 })
 </script>
 
+<script type="text/x-handlebars-template" id="process_error">
+	<div class="ui small error message">
+		<div class="left floated mini {{proc.color}} ui horizontal label">
+			{{proc.name}}
+			<div class="detail">{{proc.pid}}</div>
+		</div>
+		Rex-Foreman Error: {{message}}
+	</div>
+</script>
+
+<script type="text/x-handlebars-template" id="process_output">
+	<div class="item ui dimmable" data-rex-output data-process="{{proc.name}}">
+		<div class="left floated mini {{proc.color}} ui horizontal label">
+			{{proc.name}}
+			<div class="detail">{{proc.pid}}</div>
+		</div>
+		<div class="content">
+			{{output}}
+		</div>
+	</div>
+</script>
+
 <script type="text/x-handlebars-template" id="process_item">
-	<div class="{{#if active}}active{{/if}} item">
+	<div class="{{#if active}}active{{/if}} item ui dimmable" data-process-item="{{name}}">
+		<div class="ui top right attached {{color}} label" data-pid>{{pid}}</div>
 		<div class="ui header">
 			{{name}}
-			<div class="sub header">{{command}}</div>
+			<div class="sub header">{{fullCommand}}</div>
 		</div>
-	  <div class="ui toggle checkbox">
-	  	<input type="checkbox" name="{{name}}" {{#if active}}checked{{/if}} />
+		{{#if active}}
+	  <div class="ui toggle checkbox" data-process="{{name}}">
+	  	<input type="checkbox" name="{{name}}" {{#if active}}checked{{/if}} data-output-toggle />
 	  	<label></label>
 	  </div>
 	  <label>{{name}}</label>
+	 	{{/if}}
 	</div>
 </script>
 

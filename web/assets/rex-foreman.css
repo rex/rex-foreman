@@ -4,17 +4,17 @@
 
 html,
 body {
-  font-size: 15px;
+  font-size: 12px;
   height: 100%;
   overflow-x: hidden;
 }
 
 body {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  background: #eee;
+  background: #222;
   margin: 0px;
   padding: 0px;
-  color: #555555;
+  color: #eee;
   text-rendering: optimizeLegibility;
   min-width: 320px;
 }
@@ -33,25 +33,23 @@ pre, code, h4.header code {
   font-size: 0.8em;
 }
 
-code.output {
-  font-size: 0.6em;
-  font-family: 'Droid Sans Mono', "Anonymous Pro", serif;
-}
-
 div[data-rex-column] {
   max-height: 400px;
   margin-bottom: 20px;
 }
 
 div[data-rex-output] {
-  max-height: 400px;
-  word-wrap: break-word;
-  /*overflow-y: scroll;*/
+  font-size: 0.6em;
+  font-family: 'Droid Sans Mono', "Anonymous Pro", serif;
 }
 
 p.output {
   margin: 0;
   padding: 0px auto 3px auto;
   /*font-size: 0.6em;*/
+  color: #eee;
+}
+
+.ui.modal>.header, .ui.modal>.content {
   color: #222;
 }

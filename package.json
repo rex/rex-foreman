@@ -8,7 +8,7 @@
     "url": "https://github.com/Rex/rex-foreman.git"
   },
   "bin" : {
-    "rex-foreman" : "./rex-foreman.js"
+    "rex-foreman" : "./bin/rex-kickstart"
   },
   "keywords": [
     "Foreman",
