@@ -66,7 +66,35 @@ function configure() {
     is_windows : IS_WINDOWS
   }
 
+  _.each(procfile.split("\n"), function(proc, index) {
 
+    var parts = proc.split(":")
+      , name = parts[0].trim()
+      , command = parts[1].trim()
+
+    procs[name] = {
+      command : command,
+      dir : path.resolve( proc.dir || './' ),
+      prefix : getColor(name+' | ')
+    }
+
+    scli( procs[name].prefix + "Process '"+name+"' created. \n\t" + scli.$.red(command) )
+    
+    var process = cp.spawn(command)
+
+    process.stdout.on('data', function(data) {
+      console.log(proc.prefix + ": " + data)    
+    })
+    process.stderr.on('data', function(data) {
+      console.log(proc.prefix + " -- ERROR -- " + data)
+      killProcesses()
+    })
+    procs[name].pid = process.pid
+    procs[name].process = process
+
+    scli("Proc '"+ name +"' ", procs[name])
+  })
+  
 }
 
 /*
@@ -90,34 +118,6 @@ var killProcesses = function() {
 
 scli("procfile", procfile)
 
-_.each(procfile.split("\n"), function(proc, index) {
-
-  var parts = proc.split(":")
-    , name = parts[0].trim()
-    , command = parts[1].trim()
-
-  procs[name] = {
-    command : command,
-    dir : path.resolve( proc.dir || './' ),
-    prefix : getColor(name+' | ')
-  }
-
-  scli( procs[name].prefix + "Process '"+name+"' created. \n\t" + scli.$.red(command) )
-  
-  var process = cp.spawn(command)
-
-  process.stdout.on('data', function(data) {
-    console.log(proc.prefix + ": " + data)    
-  })
-  process.stderr.on('data', function(data) {
-    console.log(proc.prefix + " -- ERROR -- " + data)
-    killProcesses()
-  })
-  procs[name].pid = process.pid
-  procs[name].process = process
-
-  scli("Proc '"+ name +"' ", procs[name])
-})
 
 // scli.success("All processes are now working!")
 console.log("Working!")

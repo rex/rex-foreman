@@ -4,21 +4,18 @@
 		<title>rex-foreman</title>
 		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Droid+Sans+Mono|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
 
-		<link rel="stylesheet" href="/assets/components/semantic/build/packaged/css/semantic.css" />
+		<link rel="stylesheet" href="/assets/components/semantic/build/packaged/css/semantic.min.css" />
+		<link rel="stylesheet" href="/assets/rex-foreman.css" />
 		<script src="/assets/components/jquery/jquery.min.js"></script>
 		<script type="text/javascript" src="/assets/components/semantic/build/packaged/javascript/semantic.min.js"></script>
 		<script type="text/javascript" src="/assets/components/underscore/underscore-min.js"></script>
 		<script type="text/javascript" src="/assets/components/backbone/backbone-min.js"></script>
 		<script type="text/javascript" src="/assets/components/handlebars/handlebars.js"></script>
-
 		<script src="/socket.io/socket.io.js"></script>
-		<script>
-		var socket = io.connect('http://localhost:3009')
-		socket.on('config', function(config) {
-			console.log("Server sent config!", config)
-			
+		<script type="text/javascript" src="/assets/rex-foreman.client.js"></script>
 
-		})
+		<script>
+			window.RexSocket.init( io )
 		</script>
 	</head>
 
@@ -26,22 +23,27 @@
 
 		<div class="container">
 
-			<div class="ui huge header">
-				rex-foreman
+			<div class="ui red vertical sidebar menu">
+				
+				<div class="item">
+					<div class="ui huge header">
+						rex-foreman
 
-				<div class="sub header">SEXY PROCESS MANAGEMENT</div>
+						<div class="sub header">SEXY PROCESS MANAGEMENT</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="ui input">
+						<input type="text" placeholder="Search..." />
+					</div>
+				</div>
+
 			</div>
 
-			<div class="ui two column relaxed grid">
+			<!-- <div class="ui two column relaxed grid"> -->
 
 				<div class="column" data-rex-column>
-					<h4 class="ui black block header">
-						<code>nodemon app.js --debug --environment=development</code>
-					</h4>
 
-					<div class="ui segment" data-rex-output>
-
-						<code class="output">
 <p class="output">Killing any latent processes</p>
 <p class="output">Password:</p>
 <p class="output">No matching processes were found</p>
@@ -78,15 +80,30 @@
 <p class="output">10:34:00 PR_Handlebars.1 | exited with code 0</p>
 <p class="output">10:34:00 Redis.1         | terminated by SIGINT</p>
 
-						</code>
-					</div>
 				</div>
 
 
-
-			</div>
-
 		</div>
+
+<script type="text/javascript">
+$(function() {
+	$(".sidebar").sidebar('show')
+})
+</script>
+
+<script type="text/x-handlebars-template" id="process_item">
+	<div class="{{#if active}}active{{/if}} item">
+		<div class="ui header">
+			{{name}}
+			<div class="sub header">{{command}}</div>
+		</div>
+	  <div class="ui toggle checkbox">
+	  	<input type="checkbox" name="{{name}}" {{#if active}}checked{{/if}} />
+	  	<label></label>
+	  </div>
+	  <label>{{name}}</label>
+	</div>
+</script>
 
 	</body>
 

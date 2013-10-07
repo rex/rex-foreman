@@ -1,3 +1,6 @@
-brew: brew server
-templates: rex-template -w
-redis: redis-server
+coffee_client: coffee -o web/assets -cw coffee/rex-foreman.client.coffee
+coffee_server: coffee -o ./ -cw coffee/rex-foreman.server.coffee
+rex-foreman: nodemon rex-foreman.server.js
+# brew: brew server
+# templates: rex-template -w
+# redis: redis-server
