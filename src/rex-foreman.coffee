@@ -30,15 +30,15 @@ log = () ->
 	console.log.apply console, arguments
 
 handlers =
-	app : 
+	app :
 		connect : (socket) ->
-		
+
 		disconnect : () ->
 			scli "Socket Disconnected!"
 
 		boot : () ->
 			scli "Booting Processes"
-			
+
 			_.each Rex_Foreman.procs, (params, name) ->
 				if params.active
 					scli "Booting '#{name}'"
@@ -127,7 +127,7 @@ class Process
 class Rex
 	constructor : (Params) ->
 		scli "Creating new Rex-Foreman instance"
-		unless Params then Params = {} 
+		unless Params then Params = {}
 
 		@platform = os.platform()
 		@is_mac = @platform == "darwin"
@@ -141,7 +141,7 @@ class Rex
 			encoding : 'utf8'
 
 		@parseProcfile()
-		
+
 		@num_procs = _.size @procs
 
 		scli "Rex-Foreman will run #{@num_procs} processes", @procs
@@ -166,7 +166,7 @@ class Rex
 
 		try
 			_.each procfile, (proc) ->
-				if proc is "" then return 
+				if proc is "" then return
 
 				parts = proc.split(":")
 				args = []
@@ -185,7 +185,7 @@ class Rex
 					name = (name.substr 1).trim()
 					active = false
 
-				parsedProcs[name] = 
+				parsedProcs[name] =
 					name : name
 					command : command
 					active : active
@@ -199,7 +199,7 @@ class Rex
 			scli.error "Error parsing procfile: "
 			scli.error err
 			process.exit 1
-			
+
 			scli "Proc: ", renderData
 
 	getConfig : () ->
@@ -230,7 +230,7 @@ class Rex
 
 	run : () ->
 		scli "Running!"
-		@io = io.listen( @server )
+		@io = io.listen( @server, { log : false } )
 
 		@server.listen config.port
 
@@ -290,11 +290,11 @@ class Rex
 
 		process.exit 0
 
-	module.exports = 
+	module.exports =
 		init : () ->
 			Rex_Foreman = new Rex()
 		version : () ->
 			log "Version: #{pkg.version}"
 			process.exit 0
 
-			
+

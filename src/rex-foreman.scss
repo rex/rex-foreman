@@ -1,11 +1,13 @@
 /*******************************
             Global
 *******************************/
+
 html,
 body {
   font-size: 12px;
   height: 100%;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+}
 
 body {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -14,32 +16,48 @@ body {
   padding: 0px;
   color: #eee;
   text-rendering: optimizeLegibility;
-  min-width: 320px; }
+  min-width: 320px;
+}
 
 .container {
   width: 98%;
-  margin: auto; }
+  margin: auto;
+}
 
 pre, code, h4.header code {
   font-family: 'Droid Sans Mono';
-  font-size: 0.8em; }
+  font-size: 0.8em;
+}
 
 div[data-rex-column] {
   max-height: 400px;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
 
 div[data-rex-output] {
   font-size: 0.6em;
-  font-family: 'Droid Sans Mono', "Anonymous Pro", serif; }
+  font-family: 'Droid Sans Mono', "Anonymous Pro", serif;
+}
 
 p.output {
   margin: 0;
   padding: 0px auto 3px auto;
   /*font-size: 0.6em;*/
-  color: #eee; }
+  color: #eee;
+}
 
-.ui.header {
-  font-family: 'Source Sans Pro', "Helvetica Neue", "Helvetica", "Arial", sans-serif; }
-.ui.modal > .header,
-.ui.modal > .content {
-  color: #222; }
+
+.ui {
+
+  &.header {
+    font-family: 'Source Sans Pro', "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  }
+
+  &.modal {
+    > .header,
+    > .content {
+      color: #222;
+    }
+  }
+
+}

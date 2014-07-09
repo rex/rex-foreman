@@ -1,6 +1,4 @@
-coffee_client: coffee -o web/assets -cw coffee/rex-foreman.client.coffee
-coffee_server: coffee -o ./lib -cw coffee/rex-foreman.coffee
-# rex-foreman: nodemon rex-foreman.server.js
-# brew: brew server
-# templates: rex-template -w
-# redis: redis-server
+coffee_client: coffee -o web/assets -cw src/rex-foreman.client.coffee
+coffee_server: coffee -o ./lib -cw src/rex-foreman.coffee
+sass: sass --watch src:web/assets
+# rex-foreman: nodemon lib/rex-foreman.js
